@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/farmermenu"
+        android:enabled="true">
+        <item
+            android:id="@+id/postitem"
+            android:checkable="true"
+            android:enabled="true"
+            android:title="Post Item">
+
+        </item>
+        <item
+            android:id="@+id/profile"
+            android:checkable="true"
+            android:enabled="true"
+            android:title="My Profile">
+
+        </item>
+        <item
+            android:id="@+id/activitylog"
+            android:checkable="true"
+            android:enabled="true"
+            android:title="My Activities">
+
+        </item>
+    </group>
+</menu>
