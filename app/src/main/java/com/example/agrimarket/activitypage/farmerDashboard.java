@@ -19,6 +19,7 @@ public class farmerDashboard extends AppCompatActivity {
     Toolbar toolbar;
     DrawerLayout drawerLayout;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,24 +30,26 @@ public class farmerDashboard extends AppCompatActivity {
         drawerLayout = findViewById(R.id.fdrawerLayout);
         /** Functions start **/
 
-       //tollbar and nav activities
+        //tollbar and nav activities
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         navigationView.bringToFront();
         ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
-       drawerLayout.addDrawerListener(actionBarDrawerToggle);
-       actionBarDrawerToggle.syncState();
-       //navigation on click events
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
+        //navigation on click events
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-               switch (item.getItemId())
-               {
-                   case R.id.postitem:
-                       startActivity(new Intent(getApplicationContext(),postProducts.class));
-                       break;
-               }
-               return  false;
+                switch (item.getItemId()) {
+                    case R.id.postitem:
+                        startActivity(new Intent(getApplicationContext(), postProducts.class));
+                        break;
+                    case R.id.profile:
+                        startActivity(new Intent(getApplicationContext(), farmerProfile.class));
+                        break;
+                }
+                return false;
             }
         });
 
