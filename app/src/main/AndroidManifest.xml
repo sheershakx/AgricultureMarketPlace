@@ -11,7 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AgriMarket"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activitypage.createProduct"></activity>
+        <activity android:name=".activitypage.postDetail"></activity>
+        <activity android:name=".activitypage.consumerDashboard" />
+        <activity android:name=".activitypage.createProduct" />
         <activity android:name=".activitypage.createFarmer" />
         <activity android:name=".activitypage.farmerProfile" />
         <activity android:name=".activitypage.postProducts" />

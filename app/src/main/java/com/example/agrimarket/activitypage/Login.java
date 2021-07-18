@@ -45,7 +45,8 @@ public class Login extends AppCompatActivity {
                 //use username and passcode verify logic
                 Log.d("response", "Loggedint successfully");
                 Toast.makeText(Login.this, "Successful", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(getApplicationContext(), farmerDashboard.class));
+              //  startActivity(new Intent(getApplicationContext(), farmerDashboard.class));
+                startActivity(new Intent(getApplicationContext(), consumerDashboard.class));
 
 
             }
