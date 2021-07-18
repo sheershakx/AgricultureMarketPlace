@@ -42,5 +42,6 @@ public class createFarmer extends AppCompatActivity implements createFarmerFragm
     @Override
     public void farmerUserAction(String farmerName, String farmerMobile, boolean farmerStatus) {
         textView.setText(farmerName+","+farmerMobile+","+farmerStatus);
+        /** perform farmer user update or save  action**/
     }
 }
