@@ -11,21 +11,22 @@ import android.widget.TextView;
 import android.widget.ToggleButton;
 
 import com.example.agrimarket.R;
+import com.example.agrimarket.databinding.ActivityCreateFarmerBinding;
 
 public class createFarmer extends AppCompatActivity implements createFarmerFragment.createFarmerListener {
-    Button Addfarmer;
-    TextView textView;
+  ActivityCreateFarmerBinding binding;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_farmer);
-        //typecasting
-        Addfarmer = findViewById(R.id.btnAddFarmer);
-        textView=findViewById(R.id.txtSampleView);
+       binding=ActivityCreateFarmerBinding.inflate(getLayoutInflater());
+       View view=binding.getRoot();
+       setContentView(view);
+
 
         /** Functions start **/
-        Addfarmer.setOnClickListener(new View.OnClickListener() {
+        binding.btnAddFarmer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openDialog();
@@ -41,7 +42,7 @@ public class createFarmer extends AppCompatActivity implements createFarmerFragm
 
     @Override
     public void farmerUserAction(String farmerName, String farmerMobile, boolean farmerStatus) {
-        textView.setText(farmerName+","+farmerMobile+","+farmerStatus);
+
         /** perform farmer user update or save  action**/
     }
 }

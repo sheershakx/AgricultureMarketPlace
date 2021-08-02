@@ -6,6 +6,12 @@
         <item name="android:padding">10dp</item>
 
     </style>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <style name="button">
+        <item name="android:background">@color/purple</item>
+        <item name="android:textColor">@color/white</item>
+
+    </style>
+
+
 </resources>

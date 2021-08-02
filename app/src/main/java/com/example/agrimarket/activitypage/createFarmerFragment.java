@@ -19,11 +19,11 @@ import android.widget.EditText;
 import android.widget.ToggleButton;
 
 import com.example.agrimarket.R;
+import com.example.agrimarket.databinding.FragmentCreateFarmerBinding;
 
 public class createFarmerFragment extends AppCompatDialogFragment {
-    Button Save;
-    ToggleButton UserStatus;
-    EditText FarmerName, FarmerMobile;
+    //defining viewBinding
+    FragmentCreateFarmerBinding binding;
     private createFarmerListener farmerListener;
 
     @NonNull
@@ -31,28 +31,26 @@ public class createFarmerFragment extends AppCompatDialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.fragment_create_farmer, null);
+        binding=FragmentCreateFarmerBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
         builder.setView(view);
         
         //typecasting
-        Save = view.findViewById(R.id.btnSave);
-        UserStatus = view.findViewById(R.id.toggleFarmerUserStatus);
-        FarmerName = view.findViewById(R.id.etFarmerName);
-        FarmerMobile = view.findViewById(R.id.etFarmerMobile);
+
         //customize toggle button text and color
-        UserStatus.setTextOff("निस्क्रिय");
-        UserStatus.setTextOn("सक्रिय");
-        UserStatus.setChecked(true);
+
+        binding.toggleFarmerUserStatus.setTextOff("निस्क्रिय");
+        binding.toggleFarmerUserStatus.setTextOn("सक्रिय");
+        binding.toggleFarmerUserStatus.setChecked(true);
         //set color change using selector and drawable xml..see stack overflow
 
         //button Save onclick listener
-        Save.setOnClickListener(new View.OnClickListener() {
+        binding.btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String txtName=FarmerName.getText().toString();
-                String txtMobile=FarmerMobile.getText().toString();
-                boolean isStatus=UserStatus.isChecked();
+                String txtName=binding.etFarmerName.getText().toString();
+                String txtMobile=binding.etFarmerMobile.getText().toString();
+                boolean isStatus=binding.toggleFarmerUserStatus.isChecked();
                 if(validateInputs(txtName,txtMobile))
                 {
                     farmerListener.farmerUserAction(txtName,txtMobile,isStatus);
@@ -67,15 +65,15 @@ public class createFarmerFragment extends AppCompatDialogFragment {
     private boolean validateInputs(String txtname, String txtmobile) {
         boolean isvalid = true;
         if (TextUtils.isEmpty(txtname)) {
-            FarmerName.setError("कृषकको नाम खालि छ");
-            FarmerName.requestFocus();
+            binding.etFarmerName.setError("कृषकको नाम खालि छ");
+            binding.etFarmerName.requestFocus();
             isvalid = false;
             return isvalid;
 
         }
         if (TextUtils.isEmpty(txtmobile)) {
-            FarmerMobile.setError("कृषकको मोबाइल नं खालि छ");
-            FarmerMobile.requestFocus();
+            binding.etFarmerMobile.setError("कृषकको मोबाइल नं खालि छ");
+            binding.etFarmerMobile.requestFocus();
             isvalid = false;
             return isvalid;
 

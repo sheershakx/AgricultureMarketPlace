@@ -4,11 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/green"
     tools:context=".activitypage.Login">
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/secondarygreen"
+      android:backgroundTintMode="src_over"
+
 
         android:layout_margin="10dp"
         app:cardCornerRadius="10dp"
@@ -41,10 +45,13 @@
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/inputtextlayout"
                 android:layout_width="match_parent"
+               app:passwordToggleEnabled="true"
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etPassword"
+                    android:inputType="textPassword"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Password" />
@@ -53,6 +60,8 @@
             <com.google.android.material.button.MaterialButton
                 android:layout_width="150dp"
                 android:id="@+id/btnLogin"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/purple"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="Login">
