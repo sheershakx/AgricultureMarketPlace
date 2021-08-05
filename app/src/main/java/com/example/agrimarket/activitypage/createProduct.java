@@ -1,30 +1,32 @@
 package com.example.agrimarket.activitypage;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.agrimarket.R;
 import com.example.agrimarket.databinding.ActivityCreateProductBinding;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-import Interface.ProductAPI;
+import Controller.productController;
 import model.Product;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import View.ProductView;
+import View.UnitView;
+import model.Result;
+import model.Unit;
+import View.ResultView;
 
-public class createProduct extends AppCompatActivity implements createProductFragment.saveProductListener {
+
+public class createProduct extends AppCompatActivity implements createProductFragment.saveProductListener, ProductView, ResultView {
+
     ActivityCreateProductBinding binding;
+    productController productController;
 
 
     @Override
@@ -34,37 +36,7 @@ public class createProduct extends AppCompatActivity implements createProductFra
         View view = binding.getRoot();
         setContentView(view);
         /*RETROFIT OPERATIONS*/
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://api.sheershakrg.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        ProductAPI productAPI = retrofit.create(ProductAPI.class);
-        Call<List<Product>> call = productAPI.getProduct();
-        call.enqueue(new Callback<List<Product>>() {
-            @Override
-            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-
-                if (!response.isSuccessful()) {
-                    Toast.makeText(createProduct.this, "Error Code: " + response.code(), Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                List<Product> products = response.body();
-                for (Product product : products) {
-                    String collection = "";
-                    collection += "नाम: " + product.getName() + "\n";
-                    collection += "मिन: " + product.getMinRate() + "\n";
-                    collection += "माक्ष्: " + product.getMaxRate() + "\n\n";
-
-                    binding.TextView.append(collection);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Product>> call, Throwable t) {
-                Toast.makeText(createProduct.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+        productController = new productController(this, this, this);
 
 
         /** functions start **/
@@ -78,7 +50,37 @@ public class createProduct extends AppCompatActivity implements createProductFra
     }
 
     @Override
-    public void onProductAction(String txtProductName, String txtMinPrice, String txtMaxPrice) {
-        Toast.makeText(this, txtProductName, Toast.LENGTH_SHORT).show();
+    public void onProductAction(String txtProductName, Integer txtUnitID, String txtMinPrice, String txtMaxPrice) {
+        Product product = new Product();
+        product.setName(txtProductName);
+        product.setUnit(txtUnitID);
+        product.setMinRate(Float.parseFloat(txtMinPrice));
+        product.setMaxRate(Float.parseFloat(txtMaxPrice));
+        product.setStatus(1);
+        product.setUsername("admin");
+        productController.postProduct(product);
+    }
+
+
+    @Override
+    public void productReady(List<Product> products) {
+
+    }
+
+
+    @Override
+    public void responseReady(Result result) {
+        Log.e("Status", result.getStatus());
+        Log.e("Response", result.getResponse());
+        if (result.getStatus().contentEquals("OK")) {
+            Fragment productFragment = getSupportFragmentManager().findFragmentByTag("Product Fragment");
+            if (productFragment != null) {
+                DialogFragment dialogFragment = (DialogFragment) productFragment;
+                dialogFragment.dismiss();
+            }
+
+            Toast.makeText(this, result.getResponse(), Toast.LENGTH_SHORT).show();
+
+        }
     }
 }

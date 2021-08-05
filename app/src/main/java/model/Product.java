@@ -3,6 +3,11 @@ package model;
 public class Product {
 
     private int ID;
+    private String username;
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public int getID() {
         return ID;
@@ -30,6 +35,7 @@ public class Product {
 
     private String Name;
     private float MinRate;
+
 
     public void setName(String name) {
         Name = name;
