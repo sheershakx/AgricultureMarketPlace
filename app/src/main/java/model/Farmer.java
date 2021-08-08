@@ -9,7 +9,7 @@ public class Farmer {
         this.GUID = GUID;
     }
 
-    public Farmer(String GUID, String mobile, String password, String fullname, String address, String status, String username) {
+    public Farmer(String GUID, String mobile, String password, String fullname, String address, int status, String username) {
         this.GUID = GUID;
         Mobile = mobile;
         Password = password;
@@ -35,7 +35,7 @@ public class Farmer {
         Address = address;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         Status = status;
     }
 
@@ -67,7 +67,7 @@ public class Farmer {
         return Address;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return Status;
     }
 
@@ -78,6 +78,6 @@ public class Farmer {
     private String Password;
     private String Fullname;
     private String Address;
-    private String Status;
+    private int Status;
     private String username;
 }

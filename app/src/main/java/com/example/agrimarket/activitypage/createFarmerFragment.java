@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,10 +32,10 @@ public class createFarmerFragment extends AppCompatDialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        binding=FragmentCreateFarmerBinding.inflate(getLayoutInflater());
+        binding = FragmentCreateFarmerBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         builder.setView(view);
-        
+
         //typecasting
 
         //customize toggle button text and color
@@ -48,12 +49,13 @@ public class createFarmerFragment extends AppCompatDialogFragment {
         binding.btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String txtName=binding.etFarmerName.getText().toString();
-                String txtMobile=binding.etFarmerMobile.getText().toString();
-                boolean isStatus=binding.toggleFarmerUserStatus.isChecked();
-                if(validateInputs(txtName,txtMobile))
-                {
-                    farmerListener.farmerUserAction(txtName,txtMobile,isStatus);
+                String txtName = binding.etFarmerName.getText().toString();
+                String txtMobile = binding.etFarmerMobile.getText().toString();
+                String txtaddress = binding.etAddress.getText().toString();
+                boolean isStatus = binding.toggleFarmerUserStatus.isChecked();
+                Log.e("toggleStatus",String.valueOf(isStatus));
+                if (validateInputs(txtName, txtMobile)) {
+                    farmerListener.farmerUserAction(txtName, txtMobile, txtaddress, isStatus);
                     dismiss();
                 }
             }
@@ -84,7 +86,7 @@ public class createFarmerFragment extends AppCompatDialogFragment {
     }
 
     @Override
-    public void onAttach( Context context) {
+    public void onAttach(Context context) {
         super.onAttach(context);
         try {
             farmerListener = (createFarmerListener) context;
@@ -94,8 +96,8 @@ public class createFarmerFragment extends AppCompatDialogFragment {
         }
     }
 
-    public interface createFarmerListener
-    {
-        void farmerUserAction(String farmerName, String farmerMobile, boolean farmerStatus);
+    public interface createFarmerListener {
+
+        void farmerUserAction(String farmerName, String farmerMobile, String farmerAddress, boolean farmerStatus);
     }
 }

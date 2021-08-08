@@ -2,6 +2,7 @@ package Interface;
 
 import java.util.List;
 
+import model.Farmer;
 import model.Product;
 import model.Result;
 import model.Unit;
@@ -23,18 +24,6 @@ public interface FarmerAPI {
     @GET("getUnit.php")
     Call<List<Unit>> getUnit();
 
-
-
-//    @POST("createProduct.php")
-//    Call <Product> postProduct(
-//            @Query("Name") String Name,
-//            @Query("Unit") Integer Unit,
-//            @Query("MinRate") float MinRate,
-//            @Query("MaxRate") float MaxRate,
-//            @Query("Status") Integer Status,
-//            @Query("username") String username
-//
-//    );
     @FormUrlEncoded
     @POST("createProduct.php")
     Call<Result> postProduct(
@@ -42,7 +31,19 @@ public interface FarmerAPI {
             @Field("Unit") Integer unit,
             @Field("MinRate") float minrate,
             @Field("MaxRate") float maxrate,
-            @Field("Status") Integer status,
+            @Field("Status") int status,
+            @Field("username") String username
+    );
+
+    @FormUrlEncoded
+    @POST("createFarmer.php")
+    Call<Result> postFarmer(
+            @Field("GUID") String GUID,
+            @Field("Mobile") String Mobile,
+            @Field("Password") String Password,
+            @Field("Fullname") String Fullname,
+            @Field("Address") String Address,
+            @Field("Status") int Status,
             @Field("username") String username
     );
 
