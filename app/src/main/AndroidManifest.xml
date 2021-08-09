@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.agrimarket">
-<uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AgriMarket"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activitypage.postDetail"></activity>
+        <activity android:name=".activitypage.createConsumer"></activity>
+        <activity android:name=".activitypage.postDetail" />
         <activity android:name=".activitypage.consumerDashboard" />
         <activity android:name=".activitypage.createProduct" />
         <activity android:name=".activitypage.createFarmer" />

@@ -47,5 +47,17 @@ public interface FarmerAPI {
             @Field("username") String username
     );
 
+    @FormUrlEncoded
+    @POST("createConsumer.php")
+    Call<Result> postConsumer(
+            @Field("GUID") String GUID,
+            @Field("Mobile") String Mobile,
+            @Field("Password") String Password,
+            @Field("Fullname") String Fullname,
+            @Field("Address") String Address,
+            @Field("Status") int Status
+
+    );
+
 
 }
