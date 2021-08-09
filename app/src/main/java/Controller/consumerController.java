@@ -30,7 +30,7 @@ public class consumerController {
         this.consumerView = consumerView;
     }
 
-    private void createConsumer(Consumer consumer) {
+    public void createConsumer(Consumer consumer) {
         FarmerAPI farmerAPI = retrofit.create(FarmerAPI.class);
         Call<Result> call = farmerAPI.postConsumer(consumer.getGUID(), consumer.getMobile(), consumer.getPassword(), consumer.getFullname(), consumer.getAddress(), consumer.getStatus());
         call.enqueue(new Callback<Result>() {
