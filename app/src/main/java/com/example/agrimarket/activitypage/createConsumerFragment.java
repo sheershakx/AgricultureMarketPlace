@@ -78,6 +78,13 @@ public class createConsumerFragment extends AppCompatDialogFragment {
             return false;
 
         }
+        if (txtmobile.length()!=10) {
+            binding.comsumerMobile.setError("मोबाइल नं १० अंकको हुनुपर्दछ");
+            binding.comsumerMobile.requestFocus();
+
+            return false;
+
+        }
         if (TextUtils.isEmpty(txtaddress)) {
             binding.comsumerAddress.setError("ठेगाना खालि छ");
             binding.comsumerAddress.requestFocus();

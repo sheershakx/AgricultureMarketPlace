@@ -24,6 +24,7 @@ public interface FarmerAPI {
     @GET("getUnit.php")
     Call<List<Unit>> getUnit();
 
+
     @FormUrlEncoded
     @POST("createProduct.php")
     Call<Result> postProduct(
@@ -57,6 +58,22 @@ public interface FarmerAPI {
             @Field("Address") String Address,
             @Field("Status") int Status
 
+    );
+
+    @FormUrlEncoded
+    @POST("createPost.php") //create a new post for sell by farmer
+    Call<Result> postFeed(
+            @Field("FarmerID") int FarmerID,
+            @Field("DateNep") String DateNep,
+            @Field("Product") int Product,
+            @Field("Unit") int Unit,
+            @Field("Quantity") float Quantity,
+            @Field("Price") float Price,
+            @Field("Stock") float Stock,
+            @Field("Location") String Location,
+            @Field("Description") String Description,
+            @Field("HomeDelivery") int HomeDelivery,
+            @Field("Status") int Status
     );
 
 

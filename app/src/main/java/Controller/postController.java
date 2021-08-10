@@ -6,8 +6,7 @@ import android.widget.Toast;
 
 import Interface.FarmerAPI;
 import View.ResultView;
-import View.ConsumerView;
-import model.Consumer;
+import model.Posts;
 import model.Result;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -15,35 +14,41 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class consumerController {
-    Context context;
+public class postController {
     ResultView resultView;
-    ConsumerView consumerView;
+    Context context;
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("http://api.sheershakrg.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
-    public consumerController(Context context, ResultView resultView, ConsumerView consumerView) {
-        this.context = context;
+    public postController(ResultView resultView, Context context) {
         this.resultView = resultView;
-        this.consumerView = consumerView;
+        this.context = context;
     }
 
-    public void createConsumer(Consumer consumer) {
+    //functon to create post
+    public void createPost(Posts posts) {
         FarmerAPI farmerAPI = retrofit.create(FarmerAPI.class);
-        Call<Result> call = farmerAPI.postConsumer(consumer.getGUID(), consumer.getMobile(), consumer.getPassword(), consumer.getFullname(), consumer.getAddress(), consumer.getStatus());
+        Call<Result> call = farmerAPI.postFeed(posts.getFarmerID(), posts.getDateNep(), posts.getProduct(), posts.getUnit(), posts.getQuantity(), posts.getPrice(), posts.getStock(), posts.getLocation(), posts.getDescription(), posts.getHomeDelivery(), posts.getStatus());
         call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
+                if (!response.isSuccessful()) {
+                    Log.d("Error:", String.valueOf(response.code()));
+                    Toast.makeText(context, response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                //if successful then pass the response json to Result Interface via Rsult model
                 Result result = response.body();
                 resultView.responseReady(result);
             }
 
             @Override
             public void onFailure(Call<Result> call, Throwable t) {
-                Log.e("Error", t.getMessage());
-                Toast.makeText(context, "Technical Error..", Toast.LENGTH_SHORT).show();
+                Log.d("Error:", t.getMessage());
+
+                Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
