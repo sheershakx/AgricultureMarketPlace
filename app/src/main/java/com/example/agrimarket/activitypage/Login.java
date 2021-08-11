@@ -34,11 +34,13 @@ public class Login extends AppCompatActivity {
                 String txtPassword = password.getText().toString();
                 if (txtUsername.isEmpty()) {
                     username.setError("Username required");
+                    username.requestFocus();
                     username.setFocusable(true);
                     return;
                 }
                 if (txtPassword.isEmpty()) {
                     password.setError("Password required");
+                    password.requestFocus();
                     password.setFocusable(true);
                     return;
                 }
@@ -49,7 +51,7 @@ public class Login extends AppCompatActivity {
                     Toast.makeText(Login.this, "Login Successful", Toast.LENGTH_SHORT).show();
                     //  startActivity(new Intent(getApplicationContext(), farmerDashboard.class));
                     // startActivity(new Intent(getApplicationContext(), consumerDashboard.class));
-                    startActivity(new Intent(getApplicationContext(), createConsumer.class));
+                    startActivity(new Intent(getApplicationContext(), postProducts.class));
                 } else Toast.makeText(Login.this, "Invalid Login.", Toast.LENGTH_SHORT).show();
 
 

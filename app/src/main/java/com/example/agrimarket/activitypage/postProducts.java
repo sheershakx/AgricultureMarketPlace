@@ -7,17 +7,33 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.SeekBar;
-import android.widget.Spinner;
-import android.widget.Switch;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 
-import com.example.agrimarket.R;
 import com.example.agrimarket.databinding.ActivityPostProductsBinding;
 
-public class postProducts extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+
+import Controller.productController;
+import Controller.unitController;
+import View.UnitView;
+import View.ProductView;
+import model.Product;
+import model.Result;
+import model.Unit;
+import View.ResultView;
+
+public class postProducts extends AppCompatActivity implements UnitView, ProductView, ResultView {
     ActivityPostProductsBinding binding;
+    HashMap<Integer, String> uniHash = new HashMap<>();
+    HashMap<Integer, String> productHash = new HashMap<>();
+    List<Product> productCached = new ArrayList<>();
+    private Integer[] unitValueArray, productValueArray;
+    private String[] unitTextArray, productTextArray;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -30,7 +46,10 @@ public class postProducts extends AppCompatActivity {
 
 
         /** Functions Start  **/
-
+        unitController unitController = new unitController(this, this);
+        unitController.getUnit();
+        productController productController = new productController(this, this, this);
+        productController.getProduct();
         //change switch text when toggled.
         binding.toggleHomeDelivery.setShowText(true);
         binding.toggleHomeDelivery.setTextOn("छ");
@@ -49,13 +68,30 @@ public class postProducts extends AppCompatActivity {
                 String txtdescription = binding.etDescription.getText().toString();
                 if (validateInputs(txtquantity, txtprice, txtstock, txtlocation, txtdescription)) {
 
-
                 }
-
-
             }
         });
 
+        binding.spProductName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Integer productID = Arrays.asList(productValueArray).get(position);     //get productID from product ID & ArrayPos String []
+                for (Product product : productCached) {
+                    if (product.getID() == productID) {
+                        Integer unitID = product.getUnit();                             //get unitID from model
+                        Integer unitPosition = Arrays.asList(unitValueArray).indexOf(unitID); //get position of unit corresponding unit value STring[]
+                        binding.spUnit.setSelection(unitPosition);                           //set unit position
+                        binding.etPrice.setText(Float.toString(product.getMaxRate()));
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+
+        });
     }
 
     public boolean validateInputs(String quantity, String price, String stock, String location, String description) {
@@ -94,5 +130,58 @@ public class postProducts extends AppCompatActivity {
 
         }
         return true;
+    }
+
+
+    @Override
+    public void UnitReady(List<Unit> units) {
+        int i = 0;
+        for (Unit unit : units) {
+            uniHash.put(unit.getID(), unit.getUnit());
+
+
+            i++;
+        }
+        setUnitSpinner(uniHash);
+
+    }
+
+    private void setUnitSpinner(HashMap<Integer, String> hashMap) {
+        int pos = 0;
+        Collection<String> valuesCollection = hashMap.values();
+        Collection<Integer> keyCollection = hashMap.keySet();
+        unitTextArray = valuesCollection.toArray(new String[hashMap.size()]);
+
+        unitValueArray = keyCollection.toArray(new Integer[hashMap.size()]);
+        ArrayAdapter<String> unitadapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, unitTextArray);
+        unitadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        binding.spUnit.setAdapter(unitadapter);
+    }
+
+    private void setProductSpinner(HashMap<Integer, String> productHash) {
+        Collection<String> valuesCollection = productHash.values();
+        Collection<Integer> keyCollection = productHash.keySet();
+        productTextArray = valuesCollection.toArray(new String[productHash.size()]);
+        productValueArray = keyCollection.toArray(new Integer[productHash.size()]);
+        ArrayAdapter<String> unitadapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, productTextArray);
+        unitadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        binding.spProductName.setAdapter(unitadapter);
+    }
+
+    @Override
+    public void productReady(List<Product> products) {
+        productCached.addAll(products);
+        int i = 0;
+        for (Product product : products) {
+            productHash.put(product.getID(), product.getName());
+
+
+        }
+        setProductSpinner(productHash);
+    }
+
+    @Override
+    public void responseReady(Result result) {
+
     }
 }
