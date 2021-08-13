@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -34,6 +36,7 @@ public class postProducts extends AppCompatActivity implements UnitView, Product
     List<Product> productCached = new ArrayList<>();
     private Integer[] unitValueArray, productValueArray;
     private String[] unitTextArray, productTextArray;
+    public static float MinPrice, MaxPrice;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -78,10 +81,15 @@ public class postProducts extends AppCompatActivity implements UnitView, Product
                 Integer productID = Arrays.asList(productValueArray).get(position);     //get productID from product ID & ArrayPos String []
                 for (Product product : productCached) {
                     if (product.getID() == productID) {
+                        MinPrice = product.getMinRate();
+                        MaxPrice = product.getMaxRate();
+                        binding.tvPriceRange.setText("न्युनतम मुल्य: " + MinPrice + ", अधिकतम मुल्य: " + MaxPrice);
                         Integer unitID = product.getUnit();                             //get unitID from model
                         Integer unitPosition = Arrays.asList(unitValueArray).indexOf(unitID); //get position of unit corresponding unit value STring[]
                         binding.spUnit.setSelection(unitPosition);                           //set unit position
-                        binding.etPrice.setText(Float.toString(product.getMaxRate()));
+
+
+
                     }
                 }
             }
@@ -91,6 +99,27 @@ public class postProducts extends AppCompatActivity implements UnitView, Product
 
             }
 
+        });
+        binding.etPrice.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //nothing here
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                /** TODO: Check empty or null text before  checking for brtween min price and max price **/
+                float price = Float.parseFloat(binding.etPrice.getText().toString());
+                if (!(price >= MinPrice && price <= MaxPrice)) {
+                    binding.tvPriceError.setText("तपाइको मुल्य तोकिएको दायरा भित्र पर्दैन !!");
+                } else binding.tvPriceError.setText("");
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                //nothing here
+            }
         });
     }
 
@@ -185,3 +214,4 @@ public class postProducts extends AppCompatActivity implements UnitView, Product
 
     }
 }
+
