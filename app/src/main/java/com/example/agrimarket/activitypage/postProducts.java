@@ -2,15 +2,19 @@ package com.example.agrimarket.activitypage;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.example.agrimarket.databinding.ActivityPostProductsBinding;
 
@@ -20,10 +24,12 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
+import Controller.postController;
 import Controller.productController;
 import Controller.unitController;
 import View.UnitView;
 import View.ProductView;
+import model.Posts;
 import model.Product;
 import model.Result;
 import model.Unit;
@@ -62,16 +68,8 @@ public class postProducts extends AppCompatActivity implements UnitView, Product
         binding.btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: get value for spinners, not sure what value to pick, maybe ll use hashmap to store text and value and fetch value only
+                saveProduct();
 
-                String txtquantity = binding.etQuantity.getText().toString();
-                String txtprice = binding.etPrice.getText().toString();
-                String txtstock = binding.etStockQuantity.getText().toString();
-                String txtlocation = binding.etLocation.getText().toString();
-                String txtdescription = binding.etDescription.getText().toString();
-                if (validateInputs(txtquantity, txtprice, txtstock, txtlocation, txtdescription)) {
-
-                }
             }
         });
 
@@ -87,7 +85,6 @@ public class postProducts extends AppCompatActivity implements UnitView, Product
                         Integer unitID = product.getUnit();                             //get unitID from model
                         Integer unitPosition = Arrays.asList(unitValueArray).indexOf(unitID); //get position of unit corresponding unit value STring[]
                         binding.spUnit.setSelection(unitPosition);                           //set unit position
-
 
 
                     }
@@ -108,12 +105,20 @@ public class postProducts extends AppCompatActivity implements UnitView, Product
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (!TextUtils.isEmpty(binding.etPrice.getText().toString())) {
 
-                /** TODO: Check empty or null text before  checking for brtween min price and max price **/
-                float price = Float.parseFloat(binding.etPrice.getText().toString());
-                if (!(price >= MinPrice && price <= MaxPrice)) {
-                    binding.tvPriceError.setText("तपाइको मुल्य तोकिएको दायरा भित्र पर्दैन !!");
-                } else binding.tvPriceError.setText("");
+                    float price = Float.parseFloat(binding.etPrice.getText().toString());
+                    //binding.tvPriceError.setText(String.valueOf(price));
+                    if (price >= MinPrice && price <= MaxPrice) {
+                        binding.tvPriceError.setText("");
+
+                    } else {
+                        binding.tvPriceError.setText("तपाइको मुल्य तोकिएको दायरा भित्र पर्दैन !!");
+                    }
+                } else {
+                    binding.tvPriceError.setText("");
+                    Toast.makeText(postProducts.this, "मुल्य खाली छ ", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -154,6 +159,13 @@ public class postProducts extends AppCompatActivity implements UnitView, Product
         if (TextUtils.isEmpty(description)) {
             binding.etDescription.requestFocus();
             binding.etDescription.setError("विवरण आवश्यक");
+
+            return false;
+
+        }
+        if (!TextUtils.isEmpty(binding.tvPriceError.getText().toString())) {
+            binding.etPrice.requestFocus();
+            binding.etPrice.setError("मुल्य सच्याउनुहोस");
 
             return false;
 
@@ -211,7 +223,35 @@ public class postProducts extends AppCompatActivity implements UnitView, Product
 
     @Override
     public void responseReady(Result result) {
+        Log.e("Status", result.getStatus());
+        Log.e("Response", result.getResponse());
 
+        if (result.getStatus().contentEquals("OK")) {
+            Toast.makeText(this, result.getResponse(), Toast.LENGTH_SHORT).show();
+            finish();
+        }
+    }
+
+    public void saveProduct() {
+        Integer productID = Arrays.asList(productValueArray).get(binding.spProductName.getSelectedItemPosition());
+        Integer unitID = Arrays.asList(unitValueArray).get(binding.spUnit.getSelectedItemPosition());
+        Integer farmerID = 1;
+        String datenep = "2078-02-02";
+
+        String txtquantity = binding.etQuantity.getText().toString();
+        String txtprice = binding.etPrice.getText().toString();
+        String txtstock = binding.etStockQuantity.getText().toString();
+        String txtlocation = binding.etLocation.getText().toString();
+        String txtdescription = binding.etDescription.getText().toString();
+        Integer txthomedelivery = binding.toggleHomeDelivery.isChecked() == true ? 1 : 0;
+        if (validateInputs(txtquantity, txtprice, txtstock, txtlocation, txtdescription)) {
+            postController postController = new postController(this, this);
+            Posts posts = new Posts(farmerID, datenep, productID, unitID, Float.valueOf(txtquantity), Float.valueOf(txtprice), Float.valueOf(txtstock), txtlocation, txtdescription, txthomedelivery, 1);
+
+
+            postController.createPost(posts);
+
+        }
     }
 }
 
