@@ -3,6 +3,7 @@ package com.example.agrimarket.activitypage;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,7 @@ import com.example.agrimarket.databinding.ActivityCreateProductBinding;
 import java.util.HashMap;
 import java.util.List;
 
+import Adapters.productListAdapter;
 import Controller.productController;
 import model.Product;
 import View.ProductView;
@@ -37,7 +39,7 @@ public class createProduct extends AppCompatActivity implements createProductFra
         setContentView(view);
         /*RETROFIT OPERATIONS*/
         productController = new productController(this, this, this);
-
+        productController.getProduct();
 
         /** functions start **/
         binding.btnAddProduct.setOnClickListener(new View.OnClickListener() {
@@ -64,6 +66,9 @@ public class createProduct extends AppCompatActivity implements createProductFra
 
     @Override
     public void productReady(List<Product> products) {
+
+        binding.rvProductList.setLayoutManager(new LinearLayoutManager(this));
+        binding.rvProductList.setAdapter(new productListAdapter(products));
 
     }
 

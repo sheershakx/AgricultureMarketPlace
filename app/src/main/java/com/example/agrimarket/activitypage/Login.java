@@ -51,7 +51,7 @@ public class Login extends AppCompatActivity {
                     Toast.makeText(Login.this, "Login Successful", Toast.LENGTH_SHORT).show();
                     //  startActivity(new Intent(getApplicationContext(), farmerDashboard.class));
                     // startActivity(new Intent(getApplicationContext(), consumerDashboard.class));
-                    startActivity(new Intent(getApplicationContext(), postProducts.class));
+                    startActivity(new Intent(getApplicationContext(), createProduct.class));
                 } else Toast.makeText(Login.this, "Invalid Login.", Toast.LENGTH_SHORT).show();
 
 

@@ -8,15 +8,16 @@
     tools:context=".activitypage.createProduct">
 
     <Button
+        style="@style/button"
         android:id="@+id/btnAddProduct"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="बालि थप्नुहोस" />
-<TextView
+<androidx.recyclerview.widget.RecyclerView
     android:paddingTop="10dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/TextView"></TextView>
+    android:id="@+id/rvProductList"></androidx.recyclerview.widget.RecyclerView>
 
 
 </LinearLayout>
