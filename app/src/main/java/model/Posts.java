@@ -1,11 +1,47 @@
 package model;
 
-import retrofit2.http.Field;
-
 public class Posts {
     private int PostID;
     private int FarmerID;
     private String DateNep;
+
+    public void setPostID(int postID) {
+        PostID = postID;
+    }
+
+    public void setFarmername(String farmername) {
+        Farmername = farmername;
+    }
+
+    public void setProductname(String productname) {
+        Productname = productname;
+    }
+
+    public void setUnitName(String unitName) {
+        UnitName = unitName;
+    }
+
+    public int getPostID() {
+        return PostID;
+    }
+
+    private String Farmername;
+
+
+    private String Productname;
+    private String UnitName;
+
+    public String getFarmername() {
+        return Farmername;
+    }
+
+    public String getProductname() {
+        return Productname;
+    }
+
+    public String getUnitName() {
+        return UnitName;
+    }
 
     public int getFarmerID() {
         return FarmerID;

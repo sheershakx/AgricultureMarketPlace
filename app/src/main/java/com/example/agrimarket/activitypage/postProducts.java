@@ -34,8 +34,8 @@ import model.Product;
 import model.Result;
 import model.Unit;
 import View.ResultView;
-
-public class postProducts extends AppCompatActivity implements UnitView, ProductView, ResultView {
+import View.FeedView;
+public class postProducts extends AppCompatActivity implements UnitView, ProductView, ResultView,FeedView {
     ActivityPostProductsBinding binding;
     HashMap<Integer, String> uniHash = new HashMap<>();
     HashMap<Integer, String> productHash = new HashMap<>();
@@ -52,6 +52,8 @@ public class postProducts extends AppCompatActivity implements UnitView, Product
         binding = ActivityPostProductsBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+
+        binding.spUnit.setEnabled(false);
 
 
         /** Functions Start  **/
@@ -245,13 +247,18 @@ public class postProducts extends AppCompatActivity implements UnitView, Product
         String txtdescription = binding.etDescription.getText().toString();
         Integer txthomedelivery = binding.toggleHomeDelivery.isChecked() == true ? 1 : 0;
         if (validateInputs(txtquantity, txtprice, txtstock, txtlocation, txtdescription)) {
-            postController postController = new postController(this, this);
+            postController postController = new postController(this, this,this);
             Posts posts = new Posts(farmerID, datenep, productID, unitID, Float.valueOf(txtquantity), Float.valueOf(txtprice), Float.valueOf(txtstock), txtlocation, txtdescription, txthomedelivery, 1);
 
 
             postController.createPost(posts);
 
         }
+    }
+
+    @Override
+    public void feedReady(List<Posts> feeds) {
+
     }
 }
 

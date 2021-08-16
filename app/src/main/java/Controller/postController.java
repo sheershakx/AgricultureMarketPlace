@@ -4,7 +4,10 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.util.List;
+
 import Interface.FarmerAPI;
+import View.FeedView;
 import View.ResultView;
 import model.Posts;
 import model.Result;
@@ -16,15 +19,42 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class postController {
     ResultView resultView;
+    FeedView feedView;
     Context context;
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("http://api.sheershakrg.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
-    public postController(ResultView resultView, Context context) {
+    public postController(ResultView resultView, FeedView feedView, Context context) {
         this.resultView = resultView;
+        this.feedView = feedView;
         this.context = context;
+    }
+
+    public void getPost() {
+
+        FarmerAPI farmerAPI = retrofit.create(FarmerAPI.class);
+        Call<List<Posts>> call = farmerAPI.getPost();
+        call.enqueue(new Callback<List<Posts>>() {
+            @Override
+            public void onResponse(Call<List<Posts>> call, Response<List<Posts>> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(context, "Error code:" + response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                List<Posts> posts = response.body();
+                feedView.feedReady(posts);
+
+            }
+
+
+            @Override
+            public void onFailure(Call<List<Posts>> call, Throwable t) {
+                Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     //functon to create post

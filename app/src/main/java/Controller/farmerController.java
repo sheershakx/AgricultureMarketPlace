@@ -10,6 +10,7 @@ import Interface.FarmerAPI;
 import View.FarmerView;
 import View.ResultView;
 import model.Farmer;
+import model.Product;
 import model.Result;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -57,6 +58,30 @@ public class farmerController {
                 Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void getFarmer() {
+        FarmerAPI farmerAPI = retrofit.create(FarmerAPI.class);
+        Call<List<Farmer>> call = farmerAPI.getFarmer();
+        call.enqueue(new Callback<List<Farmer>>() {
+            @Override
+            public void onResponse(Call<List<Farmer>> call, Response<List<Farmer>> response) {
+                if (!response.isSuccessful()) {
+                    Toast.makeText(context, "Error Code: " + response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                List<Farmer> farmers = response.body();
+                farmerView.farmerReady(farmers);
+            }
+
+            @Override
+            public void onFailure(Call<List<Farmer>> call, Throwable t) {
+                Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+
     }
 
 

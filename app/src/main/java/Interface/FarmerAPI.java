@@ -3,6 +3,7 @@ package Interface;
 import java.util.List;
 
 import model.Farmer;
+import model.Posts;
 import model.Product;
 import model.Result;
 import model.Unit;
@@ -23,6 +24,12 @@ public interface FarmerAPI {
 
     @GET("getUnit.php")
     Call<List<Unit>> getUnit();
+
+    @GET("getFarmer.php")
+    Call<List<Farmer>> getFarmer();
+
+    @GET("getPost.php")
+    Call<List<Posts>> getPost();
 
 
     @FormUrlEncoded
@@ -61,7 +68,8 @@ public interface FarmerAPI {
     );
 
     @FormUrlEncoded
-    @POST("createPost.php") //create a new post for sell by farmer
+    @POST("createPost.php")
+        //create a new post for sell by farmer
     Call<Result> postFeed(
             @Field("FarmerID") int FarmerID,
             @Field("DateNep") String DateNep,

@@ -33,7 +33,7 @@ public class consumerDashboard extends AppCompatActivity {
         //DONOT DELETE  // getSupportFragmentManager().beginTransaction().replace(R.id.frameConsumer, new consumerFeedFragment(), "defaultFragment").commit();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.add(R.id.frameConsumer, new consumerFeedFragment(), "defaultFragment");
+        fragmentTransaction.add(R.id.frameConsumer, new consumerFeedFragment(), "defaultFragment").commit();
 
 
         /** Functions start **/
@@ -44,7 +44,7 @@ public class consumerDashboard extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.menuconsumerfeed:
                         selectedFragment = new consumerFeedFragment();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.frameConsumer, selectedFragment, "aa");
+                        getSupportFragmentManager().beginTransaction().replace(R.id.frameConsumer, selectedFragment, "aa").commit();
                         break;
                     case R.id.menuconsumerorder:
                         Toast.makeText(consumerDashboard.this, "Order", Toast.LENGTH_SHORT).show();

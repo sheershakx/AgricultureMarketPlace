@@ -1,28 +1,27 @@
 package Adapters;
 
 import android.content.Context;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.agrimarket.R;
 
 import java.util.List;
 
-import model.Product;
-import model.Unit;
+import model.Farmer;
 
-public class productListAdapter extends RecyclerView.Adapter<productListAdapter.ViewHolder> {
-    private List<Product> product;
+public class farmerListAdapter extends RecyclerView.Adapter<farmerListAdapter.ViewHolder> {
+    private List<Farmer> farmers;
 
-    public productListAdapter(List<Product> product) {
-        this.product = product;
+    public farmerListAdapter(List<Farmer> farmers) {
+        this.farmers = farmers;
     }
-
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -34,27 +33,21 @@ public class productListAdapter extends RecyclerView.Adapter<productListAdapter.
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Context context = holder.itemView.getContext();
-        holder.tvListName.setText(product.get(position).getName());
-        holder.tvListName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+        holder.tvFarmerView.setText(farmers.get(position).getFullname());
 
     }
 
     @Override
     public int getItemCount() {
-        return product.size();
+        return farmers.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvListName;
+        TextView tvFarmerView;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            tvListName = itemView.findViewById(R.id.tvListName);
+            tvFarmerView = itemView.findViewById(R.id.tvListName);
         }
     }
 }

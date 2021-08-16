@@ -4,11 +4,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
+import Adapters.farmerListAdapter;
 import View.FarmerView;
 import View.ResultView;
 
@@ -32,6 +34,7 @@ import model.Result;
 
 public class createFarmer extends AppCompatActivity implements createFarmerFragment.createFarmerListener, ResultView, FarmerView {
     ActivityCreateFarmerBinding binding;
+    farmerController farmerController;
 
 
     @Override
@@ -40,6 +43,8 @@ public class createFarmer extends AppCompatActivity implements createFarmerFragm
         binding = ActivityCreateFarmerBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
+        farmerController = new farmerController(this, this, this);
+        farmerController.getFarmer();
 
 
         /** Functions start **/
@@ -61,7 +66,7 @@ public class createFarmer extends AppCompatActivity implements createFarmerFragm
     public void farmerUserAction(String farmerName, String farmerMobile, String farmerAddress, boolean farmerStatus) {
 
         /** perform farmer user update or save  action**/
-        farmerController farmerController = new farmerController(this, this, this);
+
         String GUID = UUID.randomUUID().toString();
         String defaultPassword = "123";
         String username = "admin";
@@ -72,7 +77,9 @@ public class createFarmer extends AppCompatActivity implements createFarmerFragm
 
     @Override
     public void farmerReady(List<Farmer> farmers) {
-
+        binding.rvFarmerList.setLayoutManager(new LinearLayoutManager(this));
+        farmerListAdapter farmerListAdapter = new farmerListAdapter(farmers);
+        binding.rvFarmerList.setAdapter(farmerListAdapter);
     }
 
     @Override
