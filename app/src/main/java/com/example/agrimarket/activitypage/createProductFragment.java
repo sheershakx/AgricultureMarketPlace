@@ -25,6 +25,7 @@ import com.example.agrimarket.R;
 import com.example.agrimarket.databinding.FragmentCreateProductBinding;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -38,6 +39,9 @@ public class createProductFragment extends AppCompatDialogFragment implements Un
     private saveProductListener productListener;
     private FragmentCreateProductBinding binding;
     HashMap<String, Integer> unitHash = new HashMap<String, Integer>();
+    private Integer ID, Unit;
+    private String ProductName;
+    private float MinRate, MaxRate;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -63,10 +67,10 @@ public class createProductFragment extends AppCompatDialogFragment implements Un
                 String txtProductName = binding.etProductName.getText().toString();
                 String txtMinPrice = binding.etMinPrice.getText().toString();
                 String txtMaxPrice = binding.etMaxPrice.getText().toString();
-                Integer txtUnitID=unitHash.get(binding.spUnit.getSelectedItem().toString());
-                if (validateInputs(txtProductName, txtUnitID,txtMinPrice, txtMaxPrice)) {
+                Integer txtUnitID = unitHash.get(binding.spUnit.getSelectedItem().toString());
+                if (validateInputs(txtProductName, txtUnitID, txtMinPrice, txtMaxPrice)) {
                     //save input using interface while functions is in the main activity page
-                    productListener.onProductAction(txtProductName,txtUnitID, txtMinPrice, txtMaxPrice);
+                    productListener.onProductAction(txtProductName, txtUnitID, txtMinPrice, txtMaxPrice);
                 }
             }
         });
@@ -75,7 +79,7 @@ public class createProductFragment extends AppCompatDialogFragment implements Un
     }
 
     //function for input validation
-    public boolean validateInputs(String txtProductName, Integer txtUnitID,String txtMinPrice, String txtMaxPrice) {
+    public boolean validateInputs(String txtProductName, Integer txtUnitID, String txtMinPrice, String txtMaxPrice) {
         boolean isvalid = true;
         if (TextUtils.isEmpty(txtProductName)) {
             binding.etProductName.setError("बालिको नाम खालि छ");
@@ -107,13 +111,19 @@ public class createProductFragment extends AppCompatDialogFragment implements Un
     }
 
     //function for spinner data set
-    public void setUnitSpinner(HashMap<String, Integer> hashMap) {
+    public void setUnitSpinner(HashMap<String, Integer> hashMap, Integer UnitID) {
 
         Collection<String> collection = hashMap.keySet();
+        Collection<Integer> valuecollection = hashMap.values();
         String[] uniArray = collection.toArray(new String[hashMap.size()]);
+        Integer[] valueArray = valuecollection.toArray(new Integer[hashMap.size()]);
         ArrayAdapter<String> unitadapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, uniArray);
         unitadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         binding.spUnit.setAdapter(unitadapter);
+        if (UnitID != null && UnitID > 0) {
+            Integer pos = Arrays.asList(valueArray).indexOf(UnitID);
+            binding.spUnit.setSelection(pos);
+        }
 
     }
 
@@ -133,15 +143,30 @@ public class createProductFragment extends AppCompatDialogFragment implements Un
 
         for (Unit unit : units) {
             unitHash.put(unit.getUnit(), unit.getID());
-            // Toast.makeText(getContext(), unitHash.size(), Toast.LENGTH_SHORT).show(); //use ""+ in toast for error solve
 
         }
-        setUnitSpinner(unitHash);
+        Bundle bundle = getArguments();
+
+        setUnitSpinner(unitHash, null);
+        if (bundle != null && bundle.containsKey("ID")) {
+            ID = bundle.getInt("ID");
+            Unit = bundle.getInt("Unit");
+            ProductName = bundle.getString("ProductName");
+            MinRate = bundle.getFloat("MinRate");
+            MaxRate = bundle.getFloat("MaxRate");
+
+            binding.etProductName.setText(ProductName);
+            binding.etMaxPrice.setText(String.valueOf(MaxRate));
+            binding.etMinPrice.setText(String.valueOf(MinRate));
+            binding.etProductName.setText(ProductName);
+            setUnitSpinner(unitHash,Unit);
+
+        }
 
     }
 
     public interface saveProductListener {
-        void onProductAction(String txtProductName,Integer txtUnitID ,String txtMinPrice, String txtMaxPrice);
+        void onProductAction(String txtProductName, Integer txtUnitID, String txtMinPrice, String txtMaxPrice);
 
     }
 }

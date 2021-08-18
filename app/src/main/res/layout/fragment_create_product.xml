@@ -97,6 +97,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView18" />
 
     <Button
+        style="@style/button"
         android:id="@+id/btnProductSave"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

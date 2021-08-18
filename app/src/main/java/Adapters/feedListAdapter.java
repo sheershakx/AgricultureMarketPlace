@@ -29,7 +29,7 @@ public class feedListAdapter extends RecyclerView.Adapter<feedListAdapter.ViewHo
         return new ViewHolder(view);
     }
 
-    @SuppressLint("SetTextI18n")
+
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Context context = holder.itemView.getContext();

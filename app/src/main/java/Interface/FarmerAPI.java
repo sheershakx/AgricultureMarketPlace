@@ -13,6 +13,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 import retrofit2.http.QueryName;
@@ -42,7 +43,17 @@ public interface FarmerAPI {
             @Field("Status") int status,
             @Field("username") String username
     );
-
+    @FormUrlEncoded
+    @PUT("updateProduct.php")
+    Call<Result> updateProduct(
+            @Field("ID") Integer ID,
+            @Field("Name") String Name,
+            @Field("Unit") Integer unit,
+            @Field("MinRate") float minrate,
+            @Field("MaxRate") float maxrate,
+            @Field("Status") int status,
+            @Field("username") String username
+    );
     @FormUrlEncoded
     @POST("createFarmer.php")
     Call<Result> postFarmer(

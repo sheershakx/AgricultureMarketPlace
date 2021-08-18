@@ -93,6 +93,37 @@ public class productController {
 
     }
 
+    public void updateProduct(Product product) {
+        //creating return list
+        FarmerAPI farmerAPI = retrofit.create(FarmerAPI.class);
+
+        Call<Result> call = farmerAPI.updateProduct(product.getID(),product.getName(),product.getUnit(),product.getMinRate(),product.getMaxRate(),product.getStatus(),"admin");
+        call.enqueue(new Callback<Result>() {
+
+            @Override
+            public void onResponse(Call<Result> call, Response<Result> response) {
+
+                if (!response.isSuccessful()) {
+                    Toast.makeText(context, "Error Code: " + response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                Result productresponse=response.body();
+                resultView.responseReady(productresponse);
+
+
+
+            }
+
+            @Override
+            public void onFailure(Call<Result> call, Throwable t) {
+                Log.e("retrofit",t.getMessage());
+                Toast.makeText(context,t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+
+        });
+
+    }
+
 
 }
 
