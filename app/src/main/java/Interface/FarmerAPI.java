@@ -43,8 +43,9 @@ public interface FarmerAPI {
             @Field("Status") int status,
             @Field("username") String username
     );
+
     @FormUrlEncoded
-    @PUT("updateProduct.php")
+    @POST("updateProduct.php")
     Call<Result> updateProduct(
             @Field("ID") Integer ID,
             @Field("Name") String Name,
@@ -54,12 +55,24 @@ public interface FarmerAPI {
             @Field("Status") int status,
             @Field("username") String username
     );
+
     @FormUrlEncoded
     @POST("createFarmer.php")
     Call<Result> postFarmer(
             @Field("GUID") String GUID,
             @Field("Mobile") String Mobile,
             @Field("Password") String Password,
+            @Field("Fullname") String Fullname,
+            @Field("Address") String Address,
+            @Field("Status") int Status,
+            @Field("username") String username
+    );
+
+    @FormUrlEncoded
+    @POST("updateFarmer.php")
+    Call<Result> updateFarmer(
+
+            @Field("ID") Integer ID,
             @Field("Fullname") String Fullname,
             @Field("Address") String Address,
             @Field("Status") int Status,

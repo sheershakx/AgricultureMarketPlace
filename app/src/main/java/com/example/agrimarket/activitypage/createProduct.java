@@ -52,7 +52,7 @@ public class createProduct extends AppCompatActivity implements createProductFra
     }
 
     @Override
-    public void onProductAction(String txtProductName, Integer txtUnitID, String txtMinPrice, String txtMaxPrice) {
+    public void onProductSave(String txtProductName, Integer txtUnitID, String txtMinPrice, String txtMaxPrice) {
         Product product = new Product();
         product.setName(txtProductName);
         product.setUnit(txtUnitID);
@@ -61,6 +61,19 @@ public class createProduct extends AppCompatActivity implements createProductFra
         product.setStatus(1);
         product.setUsername("admin");
         productController.postProduct(product);
+    }
+
+    @Override
+    public void onProductUpdate(Integer ID, String txtProductName, Integer txtUnitID, String txtMinPrice, String txtMaxPrice) {
+        Product product = new Product();
+        product.setID(ID);
+        product.setName(txtProductName);
+        product.setUnit(txtUnitID);
+        product.setMinRate(Float.parseFloat(txtMinPrice));
+        product.setMaxRate(Float.parseFloat(txtMaxPrice));
+        product.setStatus(1);
+        product.setUsername("admin");
+        productController.updateProduct(product);
     }
 
 

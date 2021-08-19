@@ -4,6 +4,9 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.util.List;
 
 import Interface.FarmerAPI;
@@ -21,9 +24,12 @@ public class productController {
     Context context;
     private ProductView productView;
     private ResultView resultView;
+    Gson gson = new GsonBuilder()
+            .setLenient()
+            .create();
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("http://api.sheershakrg.com/")
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build();
 
     public productController(ProductView view,ResultView resultView, Context context) {

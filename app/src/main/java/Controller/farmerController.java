@@ -60,6 +60,32 @@ public class farmerController {
         });
     }
 
+    public void updateFarmer(Farmer farmer) {
+        FarmerAPI farmerAPI = retrofit.create(FarmerAPI.class);
+        Call<Result> call = farmerAPI.updateFarmer(farmer.getID(), farmer.getFullname(), farmer.getAddress(), farmer.getStatus(), farmer.getUsername());
+        call.enqueue(new Callback<Result>() {
+            @Override
+            public void onResponse(Call<Result> call, Response<Result> response) {
+                if (!response.isSuccessful()) {
+                    Log.d("Error:", String.valueOf(response.code()));
+                    Toast.makeText(context, response.code(), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                //if successful then pass the response json to Result Interface via Rsult model
+                Result result = response.body();
+                resultView.responseReady(result);
+
+            }
+
+            @Override
+            public void onFailure(Call<Result> call, Throwable t) {
+                Log.d("Error:", t.getMessage());
+
+                Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     public void getFarmer() {
         FarmerAPI farmerAPI = retrofit.create(FarmerAPI.class);
         Call<List<Farmer>> call = farmerAPI.getFarmer();

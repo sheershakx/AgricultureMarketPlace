@@ -63,7 +63,7 @@ public class createFarmer extends AppCompatActivity implements createFarmerFragm
     }
 
     @Override
-    public void farmerUserAction(String farmerName, String farmerMobile, String farmerAddress, boolean farmerStatus) {
+    public void farmeruserInsert(String farmerName, String farmerMobile, String farmerAddress, boolean farmerStatus) {
 
         /** perform farmer user update or save  action**/
 
@@ -71,8 +71,26 @@ public class createFarmer extends AppCompatActivity implements createFarmerFragm
         String defaultPassword = "123";
         String username = "admin";
         int status = (farmerStatus == true) ? 1 : 0;
-        Farmer farmer = new Farmer(GUID, farmerMobile, defaultPassword, farmerName, farmerAddress, status, username);
+        Farmer farmer = new Farmer();
+        farmer.setGUID(GUID);
+        farmer.setMobile(farmerMobile);
+        farmer.setPassword(defaultPassword);
+        farmer.setFullname(farmerName);
+        farmer.setAddress(farmerAddress);
+        farmer.setStatus(status);
+        farmer.setUsername(username);
         farmerController.createFarmer(farmer);
+    }
+
+    @Override
+    public void farmeruserUpdate(Integer ID, String farmerName, String farmerAddress, boolean farmerStatus) {
+        int status = (farmerStatus == true) ? 1 : 0;
+        Farmer farmer = new Farmer();
+        farmer.setID(ID);
+        farmer.setFullname(farmerName);
+        farmer.setAddress(farmerAddress);
+        farmer.setStatus(status);
+        farmer.setUsername("admin");
     }
 
     @Override

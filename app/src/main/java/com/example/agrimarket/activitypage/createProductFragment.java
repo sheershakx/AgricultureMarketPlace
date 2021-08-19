@@ -4,27 +4,16 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.agrimarket.R;
 import com.example.agrimarket.databinding.FragmentCreateProductBinding;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -42,6 +31,7 @@ public class createProductFragment extends AppCompatDialogFragment implements Un
     private Integer ID, Unit;
     private String ProductName;
     private float MinRate, MaxRate;
+    public static String OperationType;   //S -save , U-Update
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -49,7 +39,7 @@ public class createProductFragment extends AppCompatDialogFragment implements Un
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         binding = FragmentCreateProductBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
-
+        OperationType = "S";
 
         builder.setView(view);
 
@@ -70,7 +60,12 @@ public class createProductFragment extends AppCompatDialogFragment implements Un
                 Integer txtUnitID = unitHash.get(binding.spUnit.getSelectedItem().toString());
                 if (validateInputs(txtProductName, txtUnitID, txtMinPrice, txtMaxPrice)) {
                     //save input using interface while functions is in the main activity page
-                    productListener.onProductAction(txtProductName, txtUnitID, txtMinPrice, txtMaxPrice);
+                    if (OperationType.contentEquals("S")) {
+                        productListener.onProductSave(txtProductName, txtUnitID, txtMinPrice, txtMaxPrice);
+                    } else if (OperationType.contentEquals("U")) {
+                        productListener.onProductUpdate(ID, txtProductName, txtUnitID, txtMinPrice, txtMaxPrice);
+
+                    }
                 }
             }
         });
@@ -159,14 +154,18 @@ public class createProductFragment extends AppCompatDialogFragment implements Un
             binding.etMaxPrice.setText(String.valueOf(MaxRate));
             binding.etMinPrice.setText(String.valueOf(MinRate));
             binding.etProductName.setText(ProductName);
-            setUnitSpinner(unitHash,Unit);
+            binding.btnProductSave.setText("अपडेट");
+            OperationType = "U";
+            setUnitSpinner(unitHash, Unit);
 
         }
 
     }
 
     public interface saveProductListener {
-        void onProductAction(String txtProductName, Integer txtUnitID, String txtMinPrice, String txtMaxPrice);
+        void onProductSave(String txtProductName, Integer txtUnitID, String txtMinPrice, String txtMaxPrice);
+
+        void onProductUpdate(Integer ID, String txtProductName, Integer txtUnitID, String txtMinPrice, String txtMaxPrice);
 
     }
 }

@@ -2,6 +2,10 @@ package model;
 
 public class Product {
 
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
     private int ID;
     private String username;
 

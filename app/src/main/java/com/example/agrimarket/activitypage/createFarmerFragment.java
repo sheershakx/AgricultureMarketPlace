@@ -5,27 +5,23 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDialogFragment;
-import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ToggleButton;
 
-import com.example.agrimarket.R;
 import com.example.agrimarket.databinding.FragmentCreateFarmerBinding;
+
+import java.net.Inet4Address;
 
 public class createFarmerFragment extends AppCompatDialogFragment {
     //defining viewBinding
     FragmentCreateFarmerBinding binding;
     private createFarmerListener farmerListener;
+    public Integer ID;
+    public static String OperationType;  // S-Save, U-update
 
     @NonNull
 
@@ -34,9 +30,8 @@ public class createFarmerFragment extends AppCompatDialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         binding = FragmentCreateFarmerBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
+        OperationType = "S";
         builder.setView(view);
-
-        //typecasting
 
         //customize toggle button text and color
 
@@ -45,6 +40,21 @@ public class createFarmerFragment extends AppCompatDialogFragment {
         binding.toggleFarmerUserStatus.setChecked(true);
         //set color change using selector and drawable xml..see stack overflow
 
+        /*fetching bundle from recycler view adapter*/
+        Bundle bundle = getArguments();
+        if (bundle != null && bundle.containsKey("ID")) {
+            ID = bundle.getInt("ID");
+            binding.etFarmerName.setText(bundle.getString("Name"));
+            binding.etFarmerMobile.setText(bundle.getString("Mobile"));
+            binding.etAddress.setText(bundle.getString("Address"));
+            Boolean checked = bundle.getInt("Status") == 1 ? true : false;
+            binding.toggleFarmerUserStatus.setChecked(checked);
+            binding.etFarmerName.setEnabled(false);
+            binding.etFarmerMobile.setEnabled(false);
+            binding.etAddress.setEnabled(false);
+            OperationType = "P";
+
+        }
         //button Save onclick listener
         binding.btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,10 +63,15 @@ public class createFarmerFragment extends AppCompatDialogFragment {
                 String txtMobile = binding.etFarmerMobile.getText().toString();
                 String txtaddress = binding.etAddress.getText().toString();
                 boolean isStatus = binding.toggleFarmerUserStatus.isChecked();
-                Log.e("toggleStatus",String.valueOf(isStatus));
+                Log.e("toggleStatus", String.valueOf(isStatus));
                 if (validateInputs(txtName, txtMobile)) {
-                    farmerListener.farmerUserAction(txtName, txtMobile, txtaddress, isStatus);
-                    dismiss();
+                    if (OperationType.contentEquals("S")) {
+                        farmerListener.farmeruserInsert(txtName, txtMobile, txtaddress, isStatus);
+                        dismiss();
+                    } else if (OperationType.contentEquals("U")) {
+                        farmerListener.farmeruserUpdate(ID, txtName, txtaddress, isStatus);
+                    }
+
                 }
             }
         });
@@ -98,6 +113,8 @@ public class createFarmerFragment extends AppCompatDialogFragment {
 
     public interface createFarmerListener {
 
-        void farmerUserAction(String farmerName, String farmerMobile, String farmerAddress, boolean farmerStatus);
+        void farmeruserInsert(String farmerName, String farmerMobile, String farmerAddress, boolean farmerStatus);
+
+        void farmeruserUpdate(Integer ID, String farmerName, String farmerAddress, boolean farmerStatus);
     }
 }

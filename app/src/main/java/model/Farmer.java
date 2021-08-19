@@ -1,6 +1,10 @@
 package model;
 
 public class Farmer {
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
     private int ID;
     private String GUID;
     private String Mobile;
@@ -9,15 +13,7 @@ public class Farmer {
         this.GUID = GUID;
     }
 
-    public Farmer(String GUID, String mobile, String password, String fullname, String address, int status, String username) {
-        this.GUID = GUID;
-        Mobile = mobile;
-        Password = password;
-        Fullname = fullname;
-        Address = address;
-        Status = status;
-        this.username = username;
-    }
+
 
     public void setMobile(String mobile) {
         Mobile = mobile;

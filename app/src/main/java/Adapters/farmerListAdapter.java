@@ -1,6 +1,7 @@
 package Adapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,9 +9,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.agrimarket.R;
+import com.example.agrimarket.activitypage.createFarmerFragment;
+import com.example.agrimarket.activitypage.createProductFragment;
 
 import java.util.List;
 
@@ -34,6 +38,22 @@ public class farmerListAdapter extends RecyclerView.Adapter<farmerListAdapter.Vi
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Context context = holder.itemView.getContext();
         holder.tvFarmerView.setText(farmers.get(position).getFullname());
+        holder.tvFarmerView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                Bundle bundle = new Bundle();
+                bundle.putInt("ID", farmers.get(position).getID());
+                bundle.putInt("Status", farmers.get(position).getStatus());
+                bundle.putString("Name", String.valueOf(farmers.get(position).getFullname()));
+                bundle.putString("Address", String.valueOf(farmers.get(position).getAddress()));
+                bundle.putString("Mobile", String.valueOf(farmers.get(position).getMobile()));
+                createFarmerFragment farmerFragment = new createFarmerFragment();
+                farmerFragment.setArguments(bundle);
+
+                farmerFragment.show(activity.getSupportFragmentManager(), "Farmer Fragment");
+            }
+        });
 
     }
 
