@@ -91,6 +91,7 @@ public class createFarmer extends AppCompatActivity implements createFarmerFragm
         farmer.setAddress(farmerAddress);
         farmer.setStatus(status);
         farmer.setUsername("admin");
+        farmerController.updateFarmer(farmer);
     }
 
     @Override

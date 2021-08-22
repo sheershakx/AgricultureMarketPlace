@@ -5,6 +5,8 @@ public class Posts {
     private int FarmerID;
     private String DateNep;
 
+
+
     public void setPostID(int postID) {
         PostID = postID;
     }
@@ -83,13 +85,13 @@ public class Posts {
         return HomeDelivery;
     }
 
-    public int getStatus() {
+    public String getStatus() {
         return Status;
     }
 
     private int Product;
 
-    public Posts(int farmerID, String dateNep, int product, int unit, float quantity, float price, float stock, String location, String description, int homeDelivery, int status) {
+    public Posts(int farmerID, String dateNep, int product, int unit, float quantity, float price, float stock, String location, String description, int homeDelivery, String status) {
         FarmerID = farmerID;
         DateNep = dateNep;
         Product = product;
@@ -145,7 +147,7 @@ public class Posts {
         HomeDelivery = homeDelivery;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(String status) {
         Status = status;
     }
 
@@ -155,5 +157,5 @@ public class Posts {
     private String Location;
     private String Description;
     private int HomeDelivery;
-    private int Status;
+    private String Status;
 }

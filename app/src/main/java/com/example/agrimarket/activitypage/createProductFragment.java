@@ -75,33 +75,35 @@ public class createProductFragment extends AppCompatDialogFragment implements Un
 
     //function for input validation
     public boolean validateInputs(String txtProductName, Integer txtUnitID, String txtMinPrice, String txtMaxPrice) {
-        boolean isvalid = true;
+
         if (TextUtils.isEmpty(txtProductName)) {
             binding.etProductName.setError("बालिको नाम खालि छ");
             binding.etProductName.requestFocus();
-            isvalid = false;
-            return isvalid;
+            binding.etProductName.setFocusable(true);
+
+
+            return false;
         }
         if (TextUtils.isEmpty(txtMinPrice)) {
             binding.etMinPrice.setError("न्युनतम मुल्य खालि छ");
             binding.etMinPrice.requestFocus();
-            isvalid = false;
-            return isvalid;
+            binding.etMinPrice.setFocusable(true);
+            return false;
         }
         if (TextUtils.isEmpty(txtMaxPrice)) {
             binding.etMaxPrice.setError("अधिकतम मुल्य खालि छ");
             binding.etMaxPrice.requestFocus();
-            isvalid = false;
-            return isvalid;
+            binding.etMaxPrice.setFocusable(true);
+            return false;
         }
         if (txtUnitID.equals(0)) {
             Toast.makeText(getContext(), "इकाई छान्नुहोस् !!", Toast.LENGTH_SHORT).show();
             binding.spUnit.requestFocus();
-            isvalid = false;
-            return isvalid;
+            binding.spUnit.setFocusable(true);
+            return false;
         }
 
-        return isvalid;
+        return true;
 
     }
 

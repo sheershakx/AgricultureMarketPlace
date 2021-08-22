@@ -52,7 +52,8 @@ public class createFarmerFragment extends AppCompatDialogFragment {
             binding.etFarmerName.setEnabled(false);
             binding.etFarmerMobile.setEnabled(false);
             binding.etAddress.setEnabled(false);
-            OperationType = "P";
+            binding.btnSave.setText("अपडेट");
+            OperationType = "U";
 
         }
         //button Save onclick listener
@@ -63,7 +64,7 @@ public class createFarmerFragment extends AppCompatDialogFragment {
                 String txtMobile = binding.etFarmerMobile.getText().toString();
                 String txtaddress = binding.etAddress.getText().toString();
                 boolean isStatus = binding.toggleFarmerUserStatus.isChecked();
-                Log.e("toggleStatus", String.valueOf(isStatus));
+
                 if (validateInputs(txtName, txtMobile)) {
                     if (OperationType.contentEquals("S")) {
                         farmerListener.farmeruserInsert(txtName, txtMobile, txtaddress, isStatus);

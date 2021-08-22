@@ -41,7 +41,7 @@ public class createConsumer extends AppCompatActivity implements createConsumerF
     public void setConsumerUser(String consumerUser, String consumerMobile, String consumerAddress, String consumerPassword) {
         String GUID = UUID.randomUUID().toString();
         consumerController controller = new consumerController(this, this, this);
-        Consumer consumer=new Consumer(GUID,consumerMobile,consumerPassword,consumerUser,consumerAddress,1);
+        Consumer consumer = new Consumer(GUID, consumerMobile, consumerPassword, consumerUser, consumerAddress, 1);
         controller.createConsumer(consumer);
         //todo: start progress dialog on all button click of post and close it after response is fetched(VVI to stop burst post of data)
 

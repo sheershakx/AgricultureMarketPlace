@@ -51,7 +51,7 @@ public class farmerListAdapter extends RecyclerView.Adapter<farmerListAdapter.Vi
                 createFarmerFragment farmerFragment = new createFarmerFragment();
                 farmerFragment.setArguments(bundle);
 
-                farmerFragment.show(activity.getSupportFragmentManager(), "Farmer Fragment");
+                farmerFragment.show(activity.getSupportFragmentManager(), "FarmerFragment");
             }
         });
 

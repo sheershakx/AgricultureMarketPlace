@@ -92,6 +92,22 @@ public interface FarmerAPI {
     );
 
     @FormUrlEncoded
+    @POST("createOrder.php")
+    Call<Result> postOrders(
+            @Field("PostID") int PostID,
+            @Field("ConsumerID") int ConsumerID,
+            @Field("FarmerID") int FarmerID,
+            @Field("OrderDate") String OrderDate,
+            @Field("Quantity") float Quantity,
+            @Field("Homedelivery") int Homedelivery,
+            @Field("Address") String Address,
+            @Field("Mobile") String Mobile,
+            @Field("Status") String Status
+
+
+    );
+
+    @FormUrlEncoded
     @POST("createPost.php")
         //create a new post for sell by farmer
     Call<Result> postFeed(
@@ -105,7 +121,7 @@ public interface FarmerAPI {
             @Field("Location") String Location,
             @Field("Description") String Description,
             @Field("HomeDelivery") int HomeDelivery,
-            @Field("Status") int Status
+            @Field("Status") String Status
     );
 
 
