@@ -22,9 +22,9 @@ import Controller.ordersController;
 import model.Orders;
 import model.Posts;
 import View.ResultView;
-import model.Result;
+import model.Result; import View.OrderListView;
 
-public class postDetail extends AppCompatActivity implements ResultView {
+public abstract class postDetail extends AppCompatActivity implements ResultView,OrderListView {
     ActivityPostDetailBinding binding;
 
     BottomSheetBehavior sheetBehavior;
@@ -43,7 +43,7 @@ public class postDetail extends AppCompatActivity implements ResultView {
         setContentView(view);
 
         //defining controller
-        ordersController ordersController = new ordersController(this, this);
+        ordersController ordersController = new ordersController(this, this,this);
 
 
         /* Fetching intent Extras and setting text*/

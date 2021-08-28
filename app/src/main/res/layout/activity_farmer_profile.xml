@@ -8,7 +8,7 @@
     tools:context=".activitypage.farmerProfile">
 
 
-<!-- TODO: create style file for layout header bg(curved) and header text(name of curr page)-->
+    <!-- TODO: create style file for layout header bg(curved) and header text(name of curr page)-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp">

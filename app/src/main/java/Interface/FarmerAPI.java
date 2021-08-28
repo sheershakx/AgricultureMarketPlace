@@ -3,6 +3,7 @@ package Interface;
 import java.util.List;
 
 import model.Farmer;
+import model.OrderList;
 import model.Posts;
 import model.Product;
 import model.Result;
@@ -31,6 +32,11 @@ public interface FarmerAPI {
 
     @GET("getPost.php")
     Call<List<Posts>> getPost();
+
+    @FormUrlEncoded
+    @POST("getOrderList.php")
+    Call<List<OrderList>> getOrderList(@Field("ID") Integer FarmerID
+            , @Field("UserType") String UserType);
 
 
     @FormUrlEncoded

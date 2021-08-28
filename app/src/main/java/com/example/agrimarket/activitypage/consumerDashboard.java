@@ -8,25 +8,26 @@ import androidx.fragment.app.FragmentTransaction;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.example.agrimarket.R;
+import com.example.agrimarket.databinding.ActivityConsumerDashboardBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
 public class consumerDashboard extends AppCompatActivity {
-    FrameLayout frameLayout;
-    BottomNavigationView bottomNavigationView;
+    ActivityConsumerDashboardBinding binding;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_consumer_dashboard);
+        binding = ActivityConsumerDashboardBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
-        //typecasting
-        frameLayout = findViewById(R.id.frameConsumer);
-        bottomNavigationView = findViewById(R.id.buttonnavConsumer);
 
         /** FragmentManager creation for start **/
         //add over replace prerafable for first fragment commit
@@ -37,7 +38,7 @@ public class consumerDashboard extends AppCompatActivity {
 
 
         /** Functions start **/
-        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+        binding.buttonnavConsumer.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(MenuItem item) {
                 androidx.fragment.app.Fragment selectedFragment = null;

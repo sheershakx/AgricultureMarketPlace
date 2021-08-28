@@ -9,36 +9,35 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.agrimarket.R;
+import com.example.agrimarket.databinding.ActivityFarmerDashboardBinding;
 import com.google.android.material.navigation.NavigationView;
 
 public class farmerDashboard extends AppCompatActivity {
-    NavigationView navigationView;
-    Toolbar toolbar;
-    DrawerLayout drawerLayout;
+    ActivityFarmerDashboardBinding binding;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_farmer_dashboard);
-        //typecasting
-        navigationView = findViewById(R.id.fNavigationView);
-        toolbar = findViewById(R.id.ftoolbar);
-        drawerLayout = findViewById(R.id.fdrawerLayout);
+        binding=ActivityFarmerDashboardBinding.inflate(getLayoutInflater());
+        View view=binding.getRoot();
+        setContentView(view);
+
         /** Functions start **/
 
         //tollbar and nav activities
-        setSupportActionBar(toolbar);
+        setSupportActionBar(binding.ftoolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        navigationView.bringToFront();
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.app_name, R.string.app_name);
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        binding.fNavigationView.bringToFront();
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this, binding.fdrawerLayout, binding.ftoolbar, R.string.app_name, R.string.app_name);
+        binding.fdrawerLayout.addDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
         //navigation on click events
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        binding.fNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
@@ -49,7 +48,7 @@ public class farmerDashboard extends AppCompatActivity {
                         startActivity(new Intent(getApplicationContext(), farmerProfile.class));
                         break;
                     case R.id.activitylog:
-                        startActivity(new Intent(getApplicationContext(),createFarmer.class));
+                        startActivity(new Intent(getApplicationContext(), createFarmer.class));
                         break;
                 }
                 return false;

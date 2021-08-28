@@ -10,38 +10,37 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.agrimarket.R;
+import com.example.agrimarket.databinding.ActivityLoginBinding;
 import com.google.android.material.button.MaterialButton;
 
 public class Login extends AppCompatActivity {
-    EditText username, password;
-    MaterialButton login;
+    ActivityLoginBinding binding;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        View view = binding.getRoot();
+        setContentView(view);
 
-        //typecasting of widgets
-        username = findViewById(R.id.etUsername);
-        password = findViewById(R.id.etPassword);
-        login = findViewById(R.id.btnLogin);
 
         /** Page Functions Start **/
-        login.setOnClickListener(new View.OnClickListener() {
+        binding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String txtUsername = username.getText().toString();
-                String txtPassword = password.getText().toString();
+                String txtUsername = binding.etUsername.getText().toString();
+                String txtPassword = binding.etPassword.getText().toString();
                 if (txtUsername.isEmpty()) {
-                    username.setError("Username required");
-                    username.requestFocus();
-                    username.setFocusable(true);
+                    binding.etUsername.setError("Username required");
+                    binding.etUsername.requestFocus();
+                    binding.etUsername.setFocusable(true);
                     return;
                 }
                 if (txtPassword.isEmpty()) {
-                    password.setError("Password required");
-                    password.requestFocus();
-                    password.setFocusable(true);
+                    binding.etPassword.setError("Password required");
+                    binding.etPassword.requestFocus();
+                    binding.etPassword.setFocusable(true);
                     return;
                 }
                 //use username and passcode verify logic
@@ -51,10 +50,16 @@ public class Login extends AppCompatActivity {
                     Toast.makeText(Login.this, "Login Successful", Toast.LENGTH_SHORT).show();
                     //  startActivity(new Intent(getApplicationContext(), farmerDashboard.class));
                     // startActivity(new Intent(getApplicationContext(), consumerDashboard.class));
-                    startActivity(new Intent(getApplicationContext(), consumerDashboard.class));
+                    startActivity(new Intent(getApplicationContext(), farmerOrders.class));
                 } else Toast.makeText(Login.this, "Invalid Login.", Toast.LENGTH_SHORT).show();
 
 
+            }
+        });
+        binding.tvRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), farmerDashboard.class));
             }
         });
 

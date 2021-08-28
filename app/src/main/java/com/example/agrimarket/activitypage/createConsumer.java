@@ -5,6 +5,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Toast;
 
@@ -20,7 +21,7 @@ import model.Consumer;
 import model.Result;
 import View.ConsumerView;
 
-public class createConsumer extends AppCompatActivity implements createConsumerFragment.createConsumerListener, ResultView, ConsumerView {
+public class createConsumer extends AppCompatActivity implements ResultView, ConsumerView {
     ActivityCreateConsumerBinding binding;
 
 
@@ -30,23 +31,83 @@ public class createConsumer extends AppCompatActivity implements createConsumerF
         binding = ActivityCreateConsumerBinding.inflate(getLayoutInflater());
         View view = binding.getRoot();
         setContentView(view);
-    }
-
-    public void openDialog(View view) {
-        createConsumerFragment consumerFragment = new createConsumerFragment();
-        consumerFragment.show(getSupportFragmentManager(), "consumerFragment");
-    }
-
-    @Override //executes whenever user clicks 'Save' button at create Consumer Fragment
-    public void setConsumerUser(String consumerUser, String consumerMobile, String consumerAddress, String consumerPassword) {
-        String GUID = UUID.randomUUID().toString();
         consumerController controller = new consumerController(this, this, this);
-        Consumer consumer = new Consumer(GUID, consumerMobile, consumerPassword, consumerUser, consumerAddress, 1);
-        controller.createConsumer(consumer);
-        //todo: start progress dialog on all button click of post and close it after response is fetched(VVI to stop burst post of data)
+
+        binding.save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String txtName = binding.consumerName.getText().toString();
+                String txtMobile = binding.comsumerMobile.getText().toString();
+                String txtaddress = binding.comsumerAddress.getText().toString();
+                String txtpassword = binding.consumerPassword.getText().toString();
+                String txtRepassword = binding.consumerRepassword.getText().toString();
+                if (validateInputs(txtName, txtMobile, txtaddress, txtpassword, txtRepassword)) {
+                    String GUID = UUID.randomUUID().toString();
+
+                    Consumer consumer = new Consumer(GUID, txtMobile, txtpassword, txtName, txtaddress, 1);
+                    controller.createConsumer(consumer);
+
+                }
+            }
+        });
+    }
+
+    //function to validate input fields
+    private boolean validateInputs(String txtname, String txtmobile, String txtaddress, String txtpassword, String txtRepassword) {
+        if (TextUtils.isEmpty(txtname)) {
+            binding.consumerName.setError("नाम खालि छ");
+            binding.consumerName.requestFocus();
+
+            return false;
+
+        }
+        if (TextUtils.isEmpty(txtmobile)) {
+            binding.comsumerMobile.setError("मोबाइल नं खालि छ");
+            binding.comsumerMobile.requestFocus();
+
+            return false;
+
+        }
+        if (txtmobile.length() != 10) {
+            binding.comsumerMobile.setError("मोबाइल नं १० अंकको हुनुपर्दछ");
+            binding.comsumerMobile.requestFocus();
+
+            return false;
+
+        }
+        if (TextUtils.isEmpty(txtaddress)) {
+            binding.comsumerAddress.setError("ठेगाना खालि छ");
+            binding.comsumerAddress.requestFocus();
+
+            return false;
+
+        }
+        if (TextUtils.isEmpty(txtpassword)) {
+            binding.consumerPassword.setError("पासवर्ड खालि छ");
+            binding.consumerPassword.requestFocus();
+
+            return false;
+
+        }
+        if (TextUtils.isEmpty(txtRepassword)) {
+            binding.consumerRepassword.setError("पुन:पासवर्ड खालि छ");
+            binding.consumerRepassword.requestFocus();
+
+            return false;
+
+        }
+        if (!txtpassword.contentEquals(txtRepassword)) {
+            binding.consumerRepassword.setError("पासवर्ड र पुन पासवर्ड मिलेन");
+            binding.consumerRepassword.requestFocus();
+
+            return false;
+
+        }
+        return true;
 
 
     }
+
 
     @Override
     public void responseReady(Result result) {

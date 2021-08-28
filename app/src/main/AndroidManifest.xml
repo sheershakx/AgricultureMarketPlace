@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AgriMarket"
         android:usesCleartextTraffic="true">
-        <activity android:name=".activitypage.createConsumer"></activity>
+        <activity android:name=".activitypage.farmerOrders"></activity>
+        <activity android:name=".activitypage.createConsumer" />
         <activity android:name=".activitypage.postDetail" />
         <activity android:name=".activitypage.consumerDashboard" />
         <activity android:name=".activitypage.createProduct" />

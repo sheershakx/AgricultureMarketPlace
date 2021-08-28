@@ -67,6 +67,16 @@
                 android:text="Login">
 
             </com.google.android.material.button.MaterialButton>
+
+            <TextView
+                android:id="@+id/tvRegister"
+                android:layout_gravity="end"
+                android:layout_marginRight="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="रजिस्टर" android:textColor="@color/purple"
+                android:textStyle="bold"
+                android:textSize="16sp"></TextView>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
