@@ -8,7 +8,9 @@ Farmer users have options to post their product within criteria set by admin use
 Consumer's front screen is all about feed that displays products posted by farmers , view its details and place orders with contact and delivery details. They can also view their order status and logs.
 
 # This is just a prototype version of concept app, hence a lots of tasks are need to be done. I ll get back to finish this off if it gains some attention to be developed as fully developed app.
+---------------------------------------------------------------------------------------------------
 -------------------------------------------NOTE ----------------------------------------------------
+----------------------------------------------------------------------------------------------------
 Project stopped in prototype until i need to make it  final product. But there are still few major functions to be coded apart from UI/UX and beautification.
 
 Mandatory functions left to be completed:
