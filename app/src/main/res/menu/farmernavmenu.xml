@@ -18,10 +18,10 @@
 
         </item>
         <item
-            android:id="@+id/activitylog"
+            android:id="@+id/farmerorderstatus"
             android:checkable="true"
             android:enabled="true"
-            android:title="My Activities">
+            android:title="Order Status">
 
         </item>
     </group>

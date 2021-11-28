@@ -18,13 +18,17 @@ import com.example.agrimarket.databinding.ActivityPostDetailBinding;
 import com.example.agrimarket.databinding.OrderSheetLayoutBinding;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
+import java.util.List;
+
 import Controller.ordersController;
+import model.OrderList;
 import model.Orders;
 import model.Posts;
 import View.ResultView;
-import model.Result; import View.OrderListView;
+import model.Result;
+import View.OrderListView;
 
-public abstract class postDetail extends AppCompatActivity implements ResultView,OrderListView {
+public  class postDetail extends AppCompatActivity implements ResultView, OrderListView {
     ActivityPostDetailBinding binding;
 
     BottomSheetBehavior sheetBehavior;
@@ -43,7 +47,7 @@ public abstract class postDetail extends AppCompatActivity implements ResultView
         setContentView(view);
 
         //defining controller
-        ordersController ordersController = new ordersController(this, this,this);
+        ordersController ordersController = new ordersController(this, this, this);
 
 
         /* Fetching intent Extras and setting text*/
@@ -204,6 +208,11 @@ public abstract class postDetail extends AppCompatActivity implements ResultView
     public void responseReady(Result result) {
         Toast.makeText(this, result.getResponse(), Toast.LENGTH_SHORT).show();
         finish();
+
+    }
+
+    @Override
+    public void orderListReady(List<OrderList> orderList) {
 
     }
 }

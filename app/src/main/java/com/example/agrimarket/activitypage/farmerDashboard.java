@@ -47,8 +47,8 @@ public class farmerDashboard extends AppCompatActivity {
                     case R.id.profile:
                         startActivity(new Intent(getApplicationContext(), farmerProfile.class));
                         break;
-                    case R.id.activitylog:
-                        startActivity(new Intent(getApplicationContext(), createFarmer.class));
+                    case R.id.farmerorderstatus:
+                        startActivity(new Intent(getApplicationContext(), farmerOrders.class));
                         break;
                 }
                 return false;

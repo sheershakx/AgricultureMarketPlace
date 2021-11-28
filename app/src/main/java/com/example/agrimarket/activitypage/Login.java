@@ -45,13 +45,19 @@ public class Login extends AppCompatActivity {
                 }
                 //use username and passcode verify logic
 
-                if (txtUsername.equals("admin") && txtPassword.equals("123")) {
-                    Log.d("response", "Loggedin successfully");
-                    Toast.makeText(Login.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                    //  startActivity(new Intent(getApplicationContext(), farmerDashboard.class));
-                    // startActivity(new Intent(getApplicationContext(), consumerDashboard.class));
-                    startActivity(new Intent(getApplicationContext(), farmerOrders.class));
-                } else Toast.makeText(Login.this, "Invalid Login.", Toast.LENGTH_SHORT).show();
+                if (txtUsername.equals("consumer") && txtPassword.equals("123")) {
+                    startActivity(new Intent(getApplicationContext(),consumerDashboard.class));
+                    return;
+                }
+                else  if (txtUsername.equals("farmer") && txtPassword.equals("123")) {
+                    startActivity(new Intent(getApplicationContext(),farmerDashboard.class));
+                    return;
+                }
+               else if (txtUsername.equals("admin") && txtPassword.equals("123")) {
+                    startActivity(new Intent(getApplicationContext(),createFarmer.class));
+                    return;
+                }
+                else Toast.makeText(Login.this, "Invalid Login.", Toast.LENGTH_SHORT).show();
 
 
             }
