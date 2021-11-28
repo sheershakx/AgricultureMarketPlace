@@ -1,5 +1,5 @@
-**AgriMarketPlace is a Marketplace for posting items and waiting for consumers to view item and place order same as e-commerce but specifically for Agriculture products focused for farming community and local people nearby them.**
-# App flow includes 3 type of users: Admin ; Consumers ; Farmers .  
+**AgriMarketPlace is a Marketplace for posting items and waiting for consumers to view item and place order same as e-commerce but specifically for Agriculture products focused for farming community and local people nearby them.**  
+**App flow includes 3 type of users: Admin ; Consumers ; Farmers .**    
 **Admin :::**  
 Admin user is acted by any local governing body that governs farmers and market . They are accessed with user right to Create/(enable/disable) farmer(not allowed publicly to avoid spam), create Products and set its maximum rate.  
 **Farmer :::**
